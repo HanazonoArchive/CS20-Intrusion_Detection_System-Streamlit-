@@ -525,22 +525,6 @@ with st.sidebar:
 
     st.divider()
 
-    n_total  = st.session_state.packet_count
-    n_attack = sum(1 for h in st.session_state.history if h["Detected"] == "ATTACK")
-    n_benign = sum(1 for h in st.session_state.history if h["Detected"] == "BENIGN")
-
-    st.markdown("### 📡 Session Stats")
-    st.metric("Packets Analysed", n_total)
-    ca, cb = st.columns(2)
-    ca.metric("⚠️ Attacks", n_attack)
-    cb.metric("✅ Benign",  n_benign)
-
-    if n_total > 0:
-        threat_pct = n_attack / n_total
-        st.progress(threat_pct, text=f"Threat Level: {threat_pct*100:.0f}%")
-
-    st.divider()
-
     if st.button("🗑️ Clear Session", use_container_width=True):
         st.session_state.history      = []
         st.session_state.packet_count = 0
