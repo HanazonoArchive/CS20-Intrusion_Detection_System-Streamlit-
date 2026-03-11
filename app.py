@@ -13,7 +13,7 @@ import random
 # ─────────────────────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="IDS · CatBoost Classifier",
-    page_icon="🛡️",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -507,7 +507,7 @@ def make_radar(features: dict, result: str) -> go.Figure:
 # SIDEBAR
 # ─────────────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("# 🛡️ IDS Dashboard")
+    st.markdown("# IDS Dashboard")
     st.markdown("**CatBoost · Master Dataset**")
 
     if model_loaded:
@@ -538,7 +538,7 @@ with st.sidebar:
 # PAGE ① — SIMULATION LAB
 # ─────────────────────────────────────────────────────────────────────────────
 if page == "Simulation Lab":
-    st.title("🔬 Network Traffic Simulation Lab")
+    st.title("Network Traffic Simulation Lab")
     st.caption(
         "Pick a pre-built traffic scenario, fire it at the model, "
         "and watch the IDS classify it in real time."
@@ -551,33 +551,33 @@ if page == "Simulation Lab":
 
     # ── Controls ──────────────────────────────────────────────────────────────
     with ctrl_col:
-        st.subheader("🎮 Controls")
+        st.subheader("Controls")
 
         with st.container(border=True):
-            st.markdown("#### ⚔️ Attack Scenarios")
+            st.markdown("#### Attack Scenarios")
             sel_atk = st.selectbox(
                 "Attack type", attack_names,
                 key="atk_sel", label_visibility="collapsed",
             )
             st.caption(SCENARIOS[sel_atk]["desc"])
             launch_attack = st.button(
-                "🚨 Launch Attack Simulation",
+                "Launch Attack Simulation",
                 use_container_width=True, type="primary",
             )
 
         with st.container(border=True):
-            st.markdown("#### 🛡️ Benign Scenarios")
+            st.markdown("#### Benign Scenarios")
             sel_ben = st.selectbox(
                 "Benign type", benign_names,
                 key="ben_sel", label_visibility="collapsed",
             )
             st.caption(SCENARIOS[sel_ben]["desc"])
             launch_benign = st.button(
-                "📡 Send Benign Traffic",
+                "Send Benign Traffic",
                 use_container_width=True,
             )
 
-        rand_btn = st.button("🎲 Random Packet", use_container_width=True)
+        rand_btn = st.button("Random Packet", use_container_width=True)
 
     # ── Determine trigger ─────────────────────────────────────────────────────
     fresh_trigger = None
@@ -600,7 +600,7 @@ if page == "Simulation Lab":
 
             # Only run the model + add to history on a fresh button press
             if fresh_trigger:
-                with st.spinner("🔍 Analysing packet…"):
+                with st.spinner("Analysing packet…"):
                     time.sleep(0.45)
                     pred, attack_prob = run_prediction(features)
                 st.session_state.last_base_prob = attack_prob
@@ -642,7 +642,7 @@ if page == "Simulation Lab":
             mc4.metric("Confidence", f"{conf:.1f}%")
 
             # Tabs: gauge | features | what-if
-            tab_gauge, tab_feats, tab_whatif = st.tabs(["📊 Confidence Gauge", "📦 Packet Features", "🔬 What-If"])
+            tab_gauge, tab_feats, tab_whatif = st.tabs(["Confidence Gauge", "Packet Features", "What-If"])
 
             with tab_gauge:
                 st.plotly_chart(
@@ -759,12 +759,12 @@ if page == "Simulation Lab":
         elif not model_loaded:
             st.error("Model not loaded. Place `cb_master.joblib` in the working directory.")
         else:
-            st.info("👈 Select a scenario and click a button to start the simulation.")
+            st.info("Select a scenario and click a button to start the simulation.")
 
     # ── Prediction history ────────────────────────────────────────────────────
     if st.session_state.history:
         st.divider()
-        st.subheader("📜 Detection History")
+        st.subheader("Detection History")
 
         hist_col, pie_col = st.columns([3, 1])
 
@@ -894,13 +894,13 @@ if page == "Simulation Lab":
 # PAGE ② — SCENARIO ENCYCLOPEDIA
 # ─────────────────────────────────────────────────────────────────────────────
 elif page == "Scenario Encyclopedia":
-    st.title("📖 Scenario Encyclopedia")
+    st.title("Scenario Encyclopedia")
     st.caption(
         "Every built-in traffic scenario explained — what it represents, "
         "why the features look the way they do, and what makes it an attack or benign flow."
     )
 
-    tab_atk, tab_ben = st.tabs(["⚔️ Attack Scenarios", "🛡️ Benign Scenarios"])
+    tab_atk, tab_ben = st.tabs(["Attack Scenarios", "Benign Scenarios"])
 
     def _severity_badge(sev: str) -> str:
         colors = {"Critical": "#ff0000", "High": "#ff4b4b", "Medium": "#ffaa00",
@@ -1018,14 +1018,14 @@ elif page == "Scenario Encyclopedia":
 # PAGE ③ — MODEL PERFORMANCE
 # ─────────────────────────────────────────────────────────────────────────────
 elif page == "Model Performance":
-    st.title("📊 Model Performance Dashboard")
+    st.title("Model Performance Dashboard")
     st.caption(
         "Cross-dataset generalisability matrix — 6 baseline algorithms + CatBoost "
         "× 3 training sets × 3 test sets."
     )
 
     # KPI row
-    st.subheader("🏆 Best Results at a Glance")
+    st.subheader("Best Results at a Glance")
     k1, k2, k3, k4, k5 = st.columns(5)
     k1.metric("Best UNSW Accuracy",   "97.26%", "SVM · UNSW-trained")
     k2.metric("Best CICIoT Accuracy", "98.85%", "CatBoost · Master-trained")
@@ -1095,7 +1095,7 @@ elif page == "Model Performance":
     st.plotly_chart(fig_bar, use_container_width=True)
 
     # ── Radar — Master-trained models ─────────────────────────────────────────
-    st.subheader("🕸️ All-Metric Radar — Master-trained Models")
+    st.subheader("All-Metric Radar — Master-trained Models")
     master_filt = filt[filt["Trained On"] == "Master"]
     if not master_filt.empty:
         metrics_list = ["Accuracy", "Precision", "Recall", "F1", "AUC"]
@@ -1121,7 +1121,7 @@ elif page == "Model Performance":
         st.info("Select 'Master' in Training Set filter to see the radar chart.")
 
     # ── Full table ─────────────────────────────────────────────────────────────
-    with st.expander("📋 Full Results Table"):
+    with st.expander("Full Results Table"):
         display_df = filt.copy()
         for col in ["Accuracy", "Precision", "Recall", "F1", "AUC"]:
             display_df[col] = display_df[col].map(lambda x: f"{x:.2f}%")
@@ -1132,7 +1132,7 @@ elif page == "Model Performance":
 # PAGE ④ — MANUAL PREDICTION
 # ─────────────────────────────────────────────────────────────────────────────
 elif page == "Manual Prediction":
-    st.title("🎛️ Manual Feature Input")
+    st.title("Manual Feature Input")
     st.caption(
         "Three synchronized input modes — pick a preset, drag the slider, or type an exact value. "
         "Once a prediction is active, any change instantly refreshes the result."
@@ -1203,7 +1203,7 @@ elif page == "Manual Prediction":
     pcol, dcol = st.columns([2, 4])
     with pcol:
         st.selectbox(
-            "📂 Preset Scenario",
+            "Preset Scenario",
             PRESET_NAMES,
             key="mp_preset",
             on_change=_on_preset,
@@ -1277,8 +1277,8 @@ elif page == "Manual Prediction":
     # ── Action buttons ────────────────────────────────────────────────────────
     st.markdown("---")
     bc1, bc2, _ = st.columns([2, 1, 3])
-    predict_btn = bc1.button("🔍 Predict", type="primary", use_container_width=True)
-    clear_btn   = bc2.button("🗑️ Clear",   use_container_width=True)
+    predict_btn = bc1.button("Predict", type="primary", use_container_width=True)
+    clear_btn   = bc2.button("Clear",   use_container_width=True)
 
     if predict_btn:
         st.session_state.mp_result_active = True
@@ -1329,7 +1329,7 @@ elif page == "Manual Prediction":
         st.progress(float(attack_prob),     text=f"Attack probability:  {attack_prob*100:.1f}%")
         st.progress(float(1-attack_prob),   text=f"Benign probability:  {(1-attack_prob)*100:.1f}%")
 
-        tab_g, tab_r = st.tabs(["📊 Gauge", "🕸️ Radar"])
+        tab_g, tab_r = st.tabs(["Gauge", "Radar"])
         with tab_g:
             st.plotly_chart(make_gauge(attack_prob, result), use_container_width=True)
         with tab_r:
@@ -1337,7 +1337,7 @@ elif page == "Manual Prediction":
 
     else:
         st.info(
-            "Configure features above and click **🔍 Predict** to see the live result.",
+            "Configure features above and click **Predict** to see the live result.",
             icon="🎛️",
         )
 
@@ -1346,7 +1346,7 @@ elif page == "Manual Prediction":
 # PAGE ⑤ — ABOUT
 # ─────────────────────────────────────────────────────────────────────────────
 elif page == "Model Insights":
-    st.title("🔍 Model Insights — Decision Boundaries & Dataset Bias")
+    st.title("Model Insights — Decision Boundaries & Dataset Bias")
     st.caption(
         "An empirical analysis of what the Master-trained CatBoost model "
         "actually learned and why certain feature combinations reliably cross the attack/benign boundary."
@@ -1585,7 +1585,7 @@ These points extend the paper's conclusion that *"native categorical handling al
 # PAGE ⑥ — ABOUT
 # ─────────────────────────────────────────────────────────────────────────────
 elif page == "About":
-    st.title("ℹ️ About This Research")
+    st.title("ℹAbout This Research")
 
     st.markdown("""
 ### CatBoost Integration for Intrusion Detection in Evolving IoT Environments
@@ -1598,7 +1598,7 @@ elif page == "About":
 
     # ── BACKGROUND ──────────────────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("📚 Background & Motivation")
+    st.subheader("Background & Motivation")
     st.markdown("""
 Effective Intrusion Detection Systems must generalise across evolving network environments.
 The **Fathima et al. (2023) baseline study** evaluated six classical ML algorithms on the
@@ -1619,7 +1619,7 @@ required — preserving statistical structure without inflating the feature spac
 
     # ── RELATED WORK ────────────────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("📖 Related Work")
+    st.subheader("Related Work")
     st.dataframe(
         pd.DataFrame([
             {"Ref": "[1] Fathima et al.", "Year": 2023, "Algorithm": "RF, SVM, LR, GB, DT, KNN", "Dataset": "UNSW-NB15", "Limitation": "Relies on outdated dataset lacking modern IoT traffic"},
@@ -1634,7 +1634,7 @@ required — preserving statistical structure without inflating the feature spac
 
     # ── OBJECTIVES ──────────────────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("🎯 Research Objectives")
+    st.subheader("Research Objectives")
     st.markdown("""
 **General Objective:** Evaluate the impact of native categorical handling on the robustness
 and generalisability of network IDS by implementing the Fathima et al. baseline alongside
@@ -1652,7 +1652,7 @@ and CICIoT2023.
 
     # ── DATASETS ────────────────────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("🗃️ Datasets")
+    st.subheader("Datasets")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -1683,7 +1683,7 @@ and CICIoT2023.
 
     # ── UNIFIED FEATURE SCHEMA ───────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("🧬 Unified 10-Feature Schema")
+    st.subheader("Unified 10-Feature Schema")
     st.markdown(
         "Features were derived to be semantically consistent across both datasets. "
         "CICIoT features were matched directly; UNSW-NB15 features were mathematically derived "
@@ -1716,7 +1716,7 @@ to all splits (UNSW, CICIoT, Master) to ensure consistent global min/max represe
 
     # ── CATBOOST ────────────────────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("🤖 CatBoost — Why & How")
+    st.subheader("CatBoost — Why & How")
 
     cb1, cb2, cb3 = st.columns(3)
     with cb1:
@@ -1746,7 +1746,7 @@ ordered subsets for each stage.
 
     # ── HYPERPARAMETERS ─────────────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("⚙️ Hyperparameters & Replicated Baseline Metrics")
+    st.subheader("Hyperparameters & Replicated Baseline Metrics")
     st.markdown(
         "Tuning aimed to replicate the Fathima et al. baseline. The empirical replication "
         "yielded slightly lower metrics than reported (e.g., RF: 99% → 97.21% accuracy)."
@@ -1754,7 +1754,7 @@ ordered subsets for each stage.
     st.dataframe(
         pd.DataFrame([
             {"Algorithm": "CatBoost (Proposed)",  "Key Hyperparameters": "iterations=1000, lr=0.1, depth=6, l2_leaf_reg=5", "Replicated Accuracy": "96.00%", "Replicated F1": "96.08%"},
-            {"Algorithm": "SVM",                  "Key Hyperparameters": "kernel=rbf, C=1",                                  "Replicated Accuracy": "97.26%", "Replicated F1": "98.20%"},
+            {"Algorithm": "SVM",                  "Key Hyperparameters": "C=1, random_state=42, dual='auto'",                                  "Replicated Accuracy": "97.26%", "Replicated F1": "98.20%"},
             {"Algorithm": "Random Forest",        "Key Hyperparameters": "n_estimators=100, max_depth=10, max_features=log2","Replicated Accuracy": "97.21%", "Replicated F1": "98.14%"},
             {"Algorithm": "Logistic Regression",  "Key Hyperparameters": "solver=liblinear, C=10",                           "Replicated Accuracy": "97.03%", "Replicated F1": "98.05%"},
             {"Algorithm": "Gradient Boosting",    "Key Hyperparameters": "n_estimators=100, lr=0.01, max_depth=10",          "Replicated Accuracy": "96.80%", "Replicated F1": "97.87%"},
@@ -1767,7 +1767,7 @@ ordered subsets for each stage.
 
     # ── KEY RESULTS ─────────────────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("📊 Key Results Summary")
+    st.subheader("Key Results Summary")
 
     r1, r2, r3 = st.tabs(["UNSW-NB15 Test", "CICIoT Test", "Master Test"])
 
@@ -1834,7 +1834,7 @@ ordered subsets for each stage.
 
     # ── DISCUSSION ──────────────────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("💬 Discussion & Key Findings")
+    st.subheader("Discussion & Key Findings")
     st.markdown("""
 **Trade-off: Complexity vs. Generalisation Stability**
 
@@ -1864,7 +1864,7 @@ both domains are represented in training data.
 
     # ── SCOPE & LIMITATIONS ─────────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("⚠️ Scope & Limitations")
+    st.subheader("Scope & Limitations")
     st.markdown("""
 - **Binary classification only** — distinguishes benign vs. attack; does not identify specific
   attack sub-types.
@@ -1881,5 +1881,5 @@ both domains are represented in training data.
 
     # ── TECH STACK ──────────────────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("⚙️ Tech Stack")
+    st.subheader("Tech Stack")
     st.markdown("`CatBoost` · `scikit-learn` · `pandas` · `NumPy` · `Streamlit` · `Plotly`")
