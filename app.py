@@ -511,7 +511,7 @@ with st.sidebar:
     st.markdown("**CatBoost · Master Dataset**")
 
     if model_loaded:
-        st.success("Model loaded", icon="✅")
+        st.success("Model loaded", icon="")
     else:
         st.error(f"Model not loaded: {model_err}")
 
@@ -807,7 +807,7 @@ if page == "Simulation Lab":
 
     # ── Batch Stress Test ─────────────────────────────────────────────────────
     st.divider()
-    st.subheader("⚡ Batch Stress Test")
+    st.subheader("Batch Stress Test")
     st.caption(
         "Run **all scenarios** through the model at once and see a live accuracy scorecard. "
         "Demonstrates the service-label bias and cross-domain distribution shift in one view."
@@ -1338,7 +1338,7 @@ elif page == "Manual Prediction":
     else:
         st.info(
             "Configure features above and click **Predict** to see the live result.",
-            icon="🎛️",
+            icon="",
         )
 
 
@@ -1357,7 +1357,7 @@ elif page == "Model Insights":
         "the app's simulation scenarios directly against the model. The results exposed "
         "a structural bias introduced by the training data composition — directly relevant "
         "to the paper's core thesis on cross-dataset distribution shift.",
-        icon="📄",
+        icon="",
     )
 
     # ── SECTION 1: Root Cause ────────────────────────────────────────────────
@@ -1429,7 +1429,7 @@ UNSW-NB15 contained legitimate http flows.
             "crosses the attack boundary (~78%+ attack confidence). This is because large, "
             "high-weight TCP flows are statistically dominant in CICIoT's DDoS and brute-force "
             "attack traffic.",
-            icon="⚠️",
+            icon="",
         )
 
         bound_df = pd.DataFrame([
@@ -1585,7 +1585,7 @@ These points extend the paper's conclusion that *"native categorical handling al
 # PAGE ⑥ — ABOUT
 # ─────────────────────────────────────────────────────────────────────────────
 elif page == "About":
-    st.title("ℹAbout This Research")
+    st.title("About This Research")
 
     st.markdown("""
 ### CatBoost Integration for Intrusion Detection in Evolving IoT Environments
