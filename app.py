@@ -511,7 +511,7 @@ with st.sidebar:
     st.markdown("**CatBoost · Master Dataset**")
 
     if model_loaded:
-        st.success("Model loaded", icon="")
+        st.success("Model loaded", icon="✅")
     else:
         st.error(f"Model not loaded: {model_err}")
 
@@ -1338,7 +1338,7 @@ elif page == "Manual Prediction":
     else:
         st.info(
             "Configure features above and click **Predict** to see the live result.",
-            icon="",
+            icon="🎛️",
         )
 
 
@@ -1357,7 +1357,7 @@ elif page == "Model Insights":
         "the app's simulation scenarios directly against the model. The results exposed "
         "a structural bias introduced by the training data composition — directly relevant "
         "to the paper's core thesis on cross-dataset distribution shift.",
-        icon="",
+        icon="📄",
     )
 
     # ── SECTION 1: Root Cause ────────────────────────────────────────────────
@@ -1429,7 +1429,7 @@ UNSW-NB15 contained legitimate http flows.
             "crosses the attack boundary (~78%+ attack confidence). This is because large, "
             "high-weight TCP flows are statistically dominant in CICIoT's DDoS and brute-force "
             "attack traffic.",
-            icon="",
+            icon="⚠️",
         )
 
         bound_df = pd.DataFrame([
